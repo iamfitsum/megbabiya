@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 type Props = {
-  name: string;
-  image: string;
+  name?: string | null;
+  image?: string | null;
   className?: string;
 };
 
@@ -14,7 +14,7 @@ const UserAvatar = ({ name, image, className }: Props) => {
       {image && (
         <Image
           src={image}
-          alt={name}
+          alt={name || "User name"}
           width={40}
           height={40}
           className="rounded-full"
