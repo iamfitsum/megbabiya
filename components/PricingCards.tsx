@@ -19,7 +19,7 @@ const tiers = [
   },
   {
     name: "Pro",
-    id: "si_1J5Z5n2eZvKYlo2CZ1Z2Z2Z2",
+    id: "pro",
     href: "#",
     priceMonthly: "$5.99",
     description: "Unlock the Full Potential with Pro!",
