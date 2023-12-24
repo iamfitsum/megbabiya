@@ -29,6 +29,7 @@ const tiers = [
       "Unlimited Chat Rooms",
       "Supports up to 10 languages",
       "Multimedia support in chats (coming soon)",
+      "1-hour, dedicated support response time",
       "Early access to New Features",
     ],
   },
