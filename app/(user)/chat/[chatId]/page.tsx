@@ -1,14 +1,28 @@
-type Props = {};
+import { authOptions } from "@/auth";
+import ChatInput from "@/components/ChatInput";
+import { getServerSession } from "next-auth";
 
-function ChatPage({}: Props) {
-  return <>
-  {/* Admin Controls */}
-  {/* ChatMembersBadge */}
+type Props = {
+  params: {
+    chatId: string;
+  };
+};
 
-  {/* ChatMessages */}
+async function ChatPage({params: {chatId}}: Props) {
+  const session = await getServerSession(authOptions);
 
-  {/* ChatInput */}
-  </>;
+  return (
+    <>
+      {/* Admin Controls */}
+
+      {/* ChatMembersBadge */}
+
+      {/* ChatMessages */}
+
+      {/* ChatInput */}
+      <ChatInput chatId={chatId} />
+    </>
+  );
 }
 
 export default ChatPage;
