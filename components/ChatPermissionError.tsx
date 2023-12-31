@@ -10,7 +10,7 @@ function ChatPermissionError() {
       <AlertTitle>
         Error
       </AlertTitle>
-      <AlertDescription>
+      <AlertDescription className="flex">
         <p className="flex-1">
 
         You do not have permission to view this chat.
