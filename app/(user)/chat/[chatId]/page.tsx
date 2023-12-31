@@ -1,5 +1,8 @@
 import { authOptions } from "@/auth";
 import ChatInput from "@/components/ChatInput";
+import ChatMessages from "@/components/ChatMessages";
+import { sortedMessagesRef } from "@/lib/converters/Message";
+import { getDocs } from "firebase/firestore";
 import { getServerSession } from "next-auth";
 
 type Props = {
@@ -8,8 +11,12 @@ type Props = {
   };
 };
 
-async function ChatPage({params: {chatId}}: Props) {
+async function ChatPage({ params: { chatId } }: Props) {
   const session = await getServerSession(authOptions);
+
+  const initialMessages = (await getDocs(sortedMessagesRef(chatId))).docs.map(
+    (doc) => doc.data()
+  );
 
   return (
     <>
@@ -18,8 +25,13 @@ async function ChatPage({params: {chatId}}: Props) {
       {/* ChatMembersBadge */}
 
       {/* ChatMessages */}
-
-      {/* ChatInput */}
+      <div className="flex-1">
+        <ChatMessages
+          chatId={chatId}
+          session={session}
+          initialMessages={initialMessages}
+        />
+      </div>
       <ChatInput chatId={chatId} />
     </>
   );
