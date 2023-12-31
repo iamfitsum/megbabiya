@@ -9,8 +9,8 @@ import { useSubscriptionStore } from "@/store/store";
 import { useToast } from "./ui/use-toast";
 import LoadingSpinner from "./LoadingSpinner";
 import { v4 as uuidv4 } from "uuid";
-import { addChatRef } from "@/lib/converters/ChatMembers";
-import { serverTimestamp, setDoc } from "firebase/firestore";
+import { addChatRef, chatMembersCollectionGroupRef } from "@/lib/converters/ChatMembers";
+import { serverTimestamp, setDoc, getDocs } from "firebase/firestore";
 
 type Props = {
   isLarge?: boolean;
@@ -34,7 +34,13 @@ const CreateChatButton = ({ isLarge }: Props) => {
     });
 
     // TODO: Check if user is pro and limit them creating a new chat if they are not
+    const chats = (
+      await getDocs(chatMembersCollectionGroupRef(session.user.id))
+    ).docs.map((doc) => doc.data());
 
+    // check if the user is about to exceed the PRO plan which is 3 chats
+    const isPro = subscription?.role === "pro" && subscription.status === "active"
+    
     const chatId = uuidv4();
 
     await setDoc(addChatRef(chatId, session.user.id), {
