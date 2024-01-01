@@ -9,7 +9,10 @@ import { useSubscriptionStore } from "@/store/store";
 import { useToast } from "./ui/use-toast";
 import LoadingSpinner from "./LoadingSpinner";
 import { v4 as uuidv4 } from "uuid";
-import { addChatRef, chatMembersCollectionGroupRef } from "@/lib/converters/ChatMembers";
+import {
+  addChatRef,
+  chatMembersCollectionGroupRef,
+} from "@/lib/converters/ChatMembers";
 import { serverTimestamp, setDoc, getDocs } from "firebase/firestore";
 import { ToastAction } from "./ui/toast";
 
@@ -39,21 +42,28 @@ const CreateChatButton = ({ isLarge }: Props) => {
     ).docs.map((doc) => doc.data()).length;
 
     // check if the user is about to exceed the PRO plan which is 3 chats
-    const isPro = subscription?.role === "pro" && subscription.status === "active"
+    const isPro =
+      subscription?.role === "pro" && subscription.status === "active";
 
-    if(!isPro && noOfChats >= 3) {
+    if (!isPro && noOfChats >= 3) {
       toast({
         title: "Free plan limit exceeded",
-        description: "You've exceeded the limit of chats for the FREE plan. Please upgrade to PRO to continue adding users to chats!",
+        description:
+          "You've exceeded the limit of chats for the FREE plan. Please upgrade to PRO to continue adding users to chats!",
         variant: "destructive",
         action: (
-
-          <ToastAction altText="Upgrade" onClick={() => router.push("/register")}>
+          <ToastAction
+            altText="Upgrade"
+            onClick={() => router.push("/register")}
+          >
             Upgrade to PRO
           </ToastAction>
-        )
-        
-      })
+        ),
+      });
+
+      setLoading(false);
+
+      return;
     }
 
     const chatId = uuidv4();
@@ -76,7 +86,7 @@ const CreateChatButton = ({ isLarge }: Props) => {
         router.push(`/chat/${chatId}`);
       })
       .catch((error) => {
-        console.error(error)
+        console.error(error);
         toast({
           title: "Error",
           description: "There was an error creating your chat!",
