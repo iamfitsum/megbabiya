@@ -24,24 +24,22 @@ function ChatListRows({ initialChats }: Props) {
     }
   );
 
-  if(members?.length === 0) {
+  if (members?.length === 0) {
     return (
-        <div className="flex flex-col justify-center items-center pt-40 space-y-2">
-            <MessageSquare className="h-10 w-10">
-                <h1 className="text-5xl font-extralight">Welcome!</h1>
-                <h2>
-                    Let&apos;s get started by creating your first chat!
-                </h2>
-                <CreateChatButton isLarge={true}/>
-            </MessageSquare>
-        </div>
-    )
+      <div className="flex flex-col justify-center items-center pt-40 space-y-2">
+        <MessageSquare className="h-10 w-10" />
+        <h1 className="text-5xl font-extralight">Welcome!</h1>
+        <h2>Let&apos;s get started by creating your first chat!</h2>
+        <CreateChatButton isLarge={true} />
+      </div>
+    );
   }
 
   return (
     <div>
-        {members?.map((member, i) => 
-        <ChatListRow key={member.chatId} chatId={member.chatId} />)}
+      {members?.map((member, i) => (
+        <ChatListRow key={member.chatId} chatId={member.chatId} />
+      ))}
     </div>
   );
 }
