@@ -15,10 +15,10 @@ type Props = {
 function ChatListRow({ chatId }: Props) {
   const { data: session } = useSession();
   const router = useRouter();
-  const [messages, loading, error] = useCollectionData<Message>(
-    limitedSortedMessagesRef(chatId)
+  const [messages, loading] = useCollectionData<Message>(
+    limitedSortedMessagesRef(chatId),
   );
-  const language = useLanguagesStore((state) => state.language)
+  const language = useLanguagesStore((state) => state.language);
 
   function prettyUUID(n = 4) {
     return chatId.substring(0, n);

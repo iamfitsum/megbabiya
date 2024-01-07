@@ -4,23 +4,22 @@ import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { adminAuth, adminDb } from "./firebase-admin";
 
 export const authOptions: NextAuthOptions = {
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+  providers: [GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID!,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  }),
   ],
   callbacks: {
-    session: async ({session, token}) => {
-        if(session?.user){
-            if(token?.sub){
-                session.user.id = token.sub;
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        if (token?.sub) {
+          session.user.id = token.sub;
 
-                const firebaseToken = await adminAuth.createCustomToken(token.sub);
-                session.firebaseToken = firebaseToken;
-            }
+          const firebaseToken = await adminAuth.createCustomToken(token.sub);
+          session.firebaseToken = firebaseToken;
         }
-        return session;
+      }
+      return session;
     },
     jwt: async ({ user, token }) => {
       if (user) {
